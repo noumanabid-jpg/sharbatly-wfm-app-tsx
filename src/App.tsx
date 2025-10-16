@@ -477,29 +477,77 @@ function ForecastTab({ selectedDay, setSelectedDay, ahtMin, setAhtMin, occupancy
   );
 }
 
-function IntradayTab({ selectedDay, intradayDelta, setIntradayDelta }:{ selectedDay:DayName; intradayDelta:number[]; setIntradayDelta:any }) {
+function IntradayTab({
+  selectedDay,
+  intradayDelta,
+  setIntradayDelta,
+}: {
+  selectedDay: DayName;
+  intradayDelta: number[];
+  setIntradayDelta: (fn: (prev: number[]) => number[]) => void;
+}) {
   return (
     <div className="grid grid-cols-12 gap-4">
       <Card className="col-span-12 shadow-sm">
         <CardContent className="p-4">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4"><TrendingUp className="w-4 h-4"/>Intraday staffing deltas ({selectedDay})</div>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+            <TrendingUp className="w-4 h-4" />
+            Intraday staffing deltas ({selectedDay})
+          </div>
+
           <div className="overflow-x-auto">
-            <div className="min-w-[960px] grid grid-cols-[repeat(24,minmax(0,1fr))] gap-2 text-xs pb-1">
-              {/* fixed 56px columns for 24 hours */}
-            <div className="grid" style={{gridTemplateColumns:"repeat(24,56px)"}}>
-              {Array.from({length:24}, (_,h)=> (
-                <div key={h} className="flex flex-col items-center">
-                  <div className="mb-1">{String(h).padStart(2,'0')}</div>
-                  <div className="flex items-center gap-1">
-                    <Button size="icon" variant="outline" className="h-7 w-7" onClick={()=>setIntradayDelta((prev:number[])=>{ const next=[...prev]; next[h]=(next[h]||0)-1; return next; })}>-</Button>
-                    <div className="w-8 text-center">{intradayDelta[h]||0}</div>
-                    <Button size="icon" variant="outline" className="h-7 w-7" onClick={()=>setIntradayDelta((prev:number[])=>{ const next=[...prev]; next[h]=(next[h]||0)+1; return next; })}>+</Button>
+            {/* Keep the row scrollable and give each hour a fixed width */}
+            <div className="min-w-[1400px]">
+              <div
+                className="grid gap-2 text-xs pb-1"
+                style={{ gridTemplateColumns: "repeat(24,56px)" }}
+              >
+                {Array.from({ length: 24 }, (_, h) => (
+                  <div key={h} className="flex flex-col items-center">
+                    <div className="mb-1">{String(h).padStart(2, "0")}</div>
+                    <div className="flex items-center gap-1">
+                      <Button
+                        size="icon"
+                        variant="outline"
+                        className="h-7 w-7"
+                        onClick={() =>
+                          setIntradayDelta((prev) => {
+                            const next = [...prev];
+                            next[h] = (next[h] || 0) - 1;
+                            return next;
+                          })
+                        }
+                      >
+                        -
+                      </Button>
+                      <div className="w-8 text-center">
+                        {intradayDelta[h] || 0}
+                      </div>
+                      <Button
+                        size="icon"
+                        variant="outline"
+                        className="h-7 w-7"
+                        onClick={() =>
+                          setIntradayDelta((prev) => {
+                            const next = [...prev];
+                            next[h] = (next[h] || 0) + 1;
+                            return next;
+                          })
+                        }
+                      >
+                        +
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-          <div className="text-xs text-muted-foreground mt-3">These deltas are applied on top of the current Schedule coverage to simulate real-time reallocation.</div>
+
+          <div className="text-xs text-muted-foreground mt-3">
+            These deltas are applied on top of the current Schedule coverage to
+            simulate real-time reallocation.
+          </div>
         </CardContent>
       </Card>
     </div>
