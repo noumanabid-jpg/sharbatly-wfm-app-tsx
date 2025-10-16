@@ -378,7 +378,7 @@ function ScheduleTab({ roster, setRoster, selectedDay, setSelectedDay, levelFilt
       <Card className="col-span-12 shadow-sm">
         <CardContent className="p-4">
           <div className="mb-3 font-medium">{selectedDay} — Agent hours & break</div>
-          <div className="grid gap-2" style={{ gridTemplateColumns: "220px 70px 110px 110px 130px 110px 1fr" }}>
+          <div className="grid gap-2" style={{ gridTemplateColumns: "220px 70px 160px 160px 190px 140px 1fr" }}>
             <div className="text-xs font-semibold">Agent</div>
             <div className="text-xs font-semibold text-center">Active</div>
             <div className="text-xs font-semibold">Start</div>
@@ -574,10 +574,10 @@ function TimeInput({ value, onChange, disabled }: { value:number, onChange:(m:nu
   const hh = Math.floor(value/60); const mm = value%60;
   return (
     <div className="flex items-center gap-2">
-      <Input type="number" className="h-9 w-14" min={0} max={23} value={hh} disabled={disabled}
+      <Input type="number" className="h-9 w-12" min={0} max={23} value={hh} disabled={disabled}
              onChange={e=>{ const v = parseInt((e.target as HTMLInputElement).value||"0",10); onChange(Math.max(0,Math.min(23,v))*60 + mm); }} />
       <span className="text-xs">:</span>
-      <Input type="number" className="h-9 w-14" min={0} max={59} value={mm} disabled={disabled}
+      <Input type="number" className="h-9 w-12" min={0} max={59} value={mm} disabled={disabled}
              onChange={e=>{ const v = parseInt((e.target as HTMLInputElement).value||"0",10); onChange(hh*60 + Math.max(0,Math.min(59,v))); }} />
     </div>
   );
