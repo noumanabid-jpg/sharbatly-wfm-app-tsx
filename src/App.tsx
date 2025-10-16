@@ -485,6 +485,8 @@ function IntradayTab({ selectedDay, intradayDelta, setIntradayDelta }:{ selected
           <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4"><TrendingUp className="w-4 h-4"/>Intraday staffing deltas ({selectedDay})</div>
           <div className="overflow-x-auto">
             <div className="min-w-[960px] grid grid-cols-[repeat(24,minmax(0,1fr))] gap-2 text-xs pb-1">
+              {/* fixed 56px columns for 24 hours */}
+            <div className="grid" style={{gridTemplateColumns:"repeat(24,56px)"}}>
               {Array.from({length:24}, (_,h)=> (
                 <div key={h} className="flex flex-col items-center">
                   <div className="mb-1">{String(h).padStart(2,'0')}</div>
@@ -511,7 +513,7 @@ function AdherenceTab({ roster, selectedDay }:{ roster:Roster; selectedDay:DayNa
         <CardContent className="p-4">
           <div className="mb-3 font-medium">Planned vs Actual ({selectedDay}) – Adherence %</div>
           <div className="overflow-x-auto">
-            <div className="min-w-[900px] grid gap-2" style={{ gridTemplateColumns: "180px 110px 110px 110px 110px 120px" }}>
+            <div className="min-w-[900px] grid gap-2" style={{ gridTemplateColumns: "200px 160px 160px 160px 160px 120px" }}>
               <div className="text-xs font-semibold">Agent</div>
               <div className="text-xs font-semibold">Plan start</div>
               <div className="text-xs font-semibold">Plan end</div>
